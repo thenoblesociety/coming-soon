@@ -1,0 +1,636 @@
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("assets/cormorant-garamond.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("assets/cormorant-garamond-italic.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 300 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("assets/montserrat.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/* "The private list": the owner's layout. Words and the private list on
+   the left; on the right an arch where a watch, a bag and a couture gown
+   follow one another, with the house's ice-blue ground. Screen values chosen
+   by eye. */
+:root {
+  color-scheme: light;
+  --ice: #a9d0de;
+  --ice-light: #d3e8ef;
+  --ice-deep: #7fb2c6;
+  --chestnut: #4a2e22;
+  --platinum: #f1ebe8;
+  --ink: #17242b;
+  --muted: #3f5560;
+  --line: rgba(23, 36, 43, 0.14);
+  --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --sans: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --turn: 21s;
+  --act: calc(var(--turn) / 3);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --pad: clamp(18px, 5vw, 72px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  overflow-x: hidden;
+  background-color: var(--ice);
+  background-image: radial-gradient(
+    ellipse at 50% 42%,
+    var(--ice-light) 0%,
+    var(--ice) 50%,
+    var(--ice-deep) 115%
+  );
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Header and footer ---------- */
+
+.top,
+.foot {
+  padding-inline: max(var(--pad), env(safe-area-inset-left))
+    max(var(--pad), env(safe-area-inset-right));
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: clamp(64px, 9vh, 92px);
+  padding-top: env(safe-area-inset-top);
+  border-bottom: 1px solid var(--line);
+  animation: fade 1.2s ease-out both;
+}
+
+.lockup {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 0;
+}
+
+.lockup-mark {
+  display: block;
+  width: clamp(54px, 5vw, 66px);
+  height: auto;
+}
+
+.lockup-name {
+  padding-left: 18px;
+  border-left: 1px solid rgba(23, 36, 43, 0.35);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 2.4;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.contact {
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.contact:hover,
+.contact:focus-visible {
+  color: var(--chestnut);
+}
+
+.foot {
+  padding-block: 20px max(20px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+}
+
+.foot p {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* ---------- Stage ---------- */
+
+.stage {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 80px);
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: clamp(36px, 7vh, 80px) var(--pad);
+}
+
+.intro {
+  justify-self: end;
+  max-width: 470px;
+  animation: rise 1.4s 0.2s var(--ease) both;
+}
+
+.eyebrow {
+  margin: 0 0 22px;
+  color: var(--chestnut);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(54px, 6.4vw, 86px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+h1 em {
+  color: var(--chestnut);
+  font-style: italic;
+}
+
+.lead {
+  margin: 26px 0 30px;
+  font-size: clamp(15px, 1.25vw, 17px);
+  line-height: 1.6;
+}
+
+/* ---------- The private list ---------- */
+
+.list-label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.list-row {
+  display: flex;
+  gap: 8px;
+}
+
+.list input {
+  flex: 1;
+  min-width: 0;
+  height: 48px;
+  padding: 0 16px;
+  border: 1px solid rgba(23, 36, 43, 0.25);
+  border-radius: 0;
+  background: #f2f7f9;
+  color: var(--ink);
+  font: 400 15px var(--sans);
+}
+
+.list input::placeholder {
+  color: #5d717b;
+}
+
+.list input:focus {
+  outline: 2px solid var(--chestnut);
+  outline-offset: 1px;
+}
+
+.list button {
+  flex: none;
+  height: 48px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 0;
+  background: var(--ink);
+  color: var(--platinum);
+  cursor: pointer;
+  font: 600 12px var(--sans);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: background 0.3s;
+}
+
+.list button:hover,
+.list button:focus-visible {
+  background: var(--chestnut);
+}
+
+.list-note {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ---------- The arch ---------- */
+
+.showcase {
+  justify-self: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 480px);
+  animation: rise 1.6s 0.35s var(--ease) both;
+}
+
+.arch {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 0.96;
+  overflow: hidden;
+  border: 1px solid rgba(23, 36, 43, 0.14);
+  border-bottom-color: rgba(23, 36, 43, 0.22);
+  border-radius: 999px 999px 0 0;
+  background: radial-gradient(
+    ellipse at 50% 35%,
+    #eef5f8 0%,
+    #dde9ef 60%,
+    #cfe1e9 100%
+  );
+  isolation: isolate;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+
+/* Each piece holds the arch for a third of the turn. */
+.slide {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  opacity: 0;
+  animation: show var(--turn) var(--ease) infinite both;
+}
+
+.slide-2 {
+  animation-delay: var(--act);
+}
+
+.slide-3 {
+  animation-delay: calc(var(--act) * 2);
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+  6% {
+    opacity: 1;
+    transform: none;
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.015);
+  }
+  35%,
+  100% {
+    opacity: 0;
+    transform: scale(1.03);
+  }
+}
+
+.watch img,
+.bag img {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+}
+
+.watch img {
+  width: auto;
+  height: 80%;
+  filter: drop-shadow(0 18px 22px rgba(23, 36, 43, 0.28));
+  animation: settle var(--turn) var(--ease) infinite both;
+}
+
+@keyframes settle {
+  0% {
+    transform: rotate(-8deg);
+  }
+  8%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.bag img {
+  width: 74%;
+  height: auto;
+  top: 12%;
+  filter: drop-shadow(0 18px 20px rgba(23, 36, 43, 0.26));
+}
+
+/* The whole gown, head to hem, standing in the arch; its photograph fades
+   into the arch at the sides, and colour returns to the silk. */
+.gown img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: 50% 100%;
+  /* The photograph spans 27–73% of the arch's width (610 × 1280 at full
+     height); its sides dissolve into the arch. */
+  -webkit-mask-image: linear-gradient(90deg, transparent 27%, #000 39%, #000 61%, transparent 73%);
+  mask-image: linear-gradient(90deg, transparent 27%, #000 39%, #000 61%, transparent 73%);
+}
+
+.gown .gown-silk {
+  animation: colour var(--turn) var(--ease) infinite both;
+  animation-delay: calc(var(--act) * 2);
+}
+
+@keyframes colour {
+  0%,
+  5% {
+    clip-path: inset(100% 0 0 0);
+  }
+  14%,
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* A light passes over the glass at each change. */
+.sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    110deg,
+    rgba(255, 255, 255, 0) 38%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 62%
+  );
+  background-size: 300% 100%;
+  background-repeat: no-repeat;
+  background-position: 130% 0;
+  animation: sweep var(--act) ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes sweep {
+  0%,
+  8% {
+    background-position: 130% 0;
+  }
+  40%,
+  100% {
+    background-position: -30% 0;
+  }
+}
+
+/* ---------- Tabs ---------- */
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: clamp(18px, 3vw, 36px);
+  margin: 26px 0 0;
+}
+
+.tab {
+  position: relative;
+  padding: 0 4px 12px;
+  color: #4d626c;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  animation: tab var(--turn) linear infinite;
+}
+
+.tab i {
+  margin-right: 8px;
+  font-family: var(--serif);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+.tab::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--chestnut);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: fill var(--turn) linear infinite;
+}
+
+.tab.slide-2,
+.tab.slide-2::after {
+  animation-delay: var(--act);
+}
+
+.tab.slide-3,
+.tab.slide-3::after {
+  animation-delay: calc(var(--act) * 2);
+}
+
+@keyframes tab {
+  0%,
+  33.33% {
+    color: var(--ink);
+  }
+  34%,
+  100% {
+    color: #4d626c;
+  }
+}
+
+@keyframes fill {
+  0% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  33.33% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  35%,
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ---------- Smaller screens ---------- */
+
+@media (max-width: 860px) {
+  .stage {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-top: 36px;
+  }
+
+  .intro,
+  .showcase {
+    justify-self: center;
+  }
+
+  .intro {
+    max-width: 560px;
+  }
+
+  .showcase {
+    width: min(100%, 420px);
+  }
+}
+
+@media (max-width: 480px) {
+  .lockup {
+    gap: 12px;
+  }
+
+  .lockup-name {
+    padding-left: 12px;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+  }
+
+  .list-row {
+    flex-direction: column;
+  }
+
+  .list input {
+    flex: none;
+    width: 100%;
+  }
+
+  .list button {
+    width: 100%;
+  }
+
+  .tab {
+    letter-spacing: 0.1em;
+  }
+
+  .tab i {
+    margin-right: 5px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .lockup-name {
+    display: none;
+  }
+
+  .tabs {
+    gap: 12px;
+  }
+
+  .tab {
+    font-size: 10px;
+  }
+}
+
+/* Without motion the watch rests in the arch. */
+@media (prefers-reduced-motion: reduce) {
+  .top,
+  .intro,
+  .showcase,
+  .slide,
+  .watch img,
+  .gown .gown-silk,
+  .sheen,
+  .tab,
+  .tab::after {
+    animation: none;
+  }
+
+  .slide-1 {
+    opacity: 1;
+  }
+
+  .sheen {
+    display: none;
+  }
+
+  .tab.slide-1 {
+    color: var(--ink);
+  }
+
+  .tab.slide-1::after {
+    transform: scaleX(1);
+  }
+}
+
+/* Very narrow phones (folded screens). */
+@media (max-width: 340px) {
+  h1 {
+    font-size: 44px;
+  }
+
+  .eyebrow {
+    letter-spacing: 0.14em;
+  }
+
+  .tabs {
+    gap: 8px;
+  }
+
+  .tab {
+    padding-inline: 0;
+    letter-spacing: 0.06em;
+  }
+
+  .tab i {
+    margin-right: 3px;
+    font-size: 14px;
+  }
+}
